@@ -1,3 +1,4 @@
+import { feedbackListStateT } from "./Container";
 import FeedbackForm from "./FeedbackForm";
 import Logo from "./Logo";
 import PageHeading from "./PageHeading";
@@ -6,13 +7,21 @@ export type headerPropTypes = {
   inputText: string;
   setInputText: React.Dispatch<React.SetStateAction<string>>;
 };
-export default function Header({ inputText, setInputText }: headerPropTypes) {
+export default function Header({
+  inputText,
+  setInputText,
+  setFeedbackList,
+}: headerPropTypes & feedbackListStateT) {
   return (
     <header>
       <Pattern />
       <Logo />
       <PageHeading />
-      <FeedbackForm inputText={inputText} setInputText={setInputText} />
+      <FeedbackForm
+        onSubmit={setFeedbackList}
+        inputText={inputText}
+        setInputText={setInputText}
+      />
     </header>
   );
 }
