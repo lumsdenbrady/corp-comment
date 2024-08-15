@@ -372,7 +372,9 @@ form button span::selection {
 .feedback:hover > p:nth-child(4) {
   transform: translateX(5px);
 }
-
+.feedback > div:nth-child(2) > p:first-child {
+  text-transform: uppercase;
+}
 .feedback > div:nth-child(2) {
   height: 49px;
   width: 49px;

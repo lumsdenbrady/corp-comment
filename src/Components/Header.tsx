@@ -2,14 +2,17 @@ import FeedbackForm from "./FeedbackForm";
 import Logo from "./Logo";
 import PageHeading from "./PageHeading";
 import Pattern from "./Pattern";
-
-export default function Header() {
+export type headerPropTypes = {
+  inputText: string;
+  setInputText: React.Dispatch<React.SetStateAction<string>>;
+};
+export default function Header({ inputText, setInputText }: headerPropTypes) {
   return (
     <header>
       <Pattern />
       <Logo />
       <PageHeading />
-      <FeedbackForm />
+      <FeedbackForm inputText={inputText} setInputText={setInputText} />
     </header>
   );
 }
