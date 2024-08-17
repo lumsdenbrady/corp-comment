@@ -1,17 +1,13 @@
-import { feedbackItemT } from "./FeedbackList";
+import { feedbackItemT } from "../App";
 
 export default function FeedbackItem({
   feedbackItem,
 }: {
   feedbackItem: feedbackItemT;
 }) {
-  const company = feedbackItem.bodyText.split("#")[1].split(" ")[0];
-
-  const firstChar = company[0].slice(0, 1);
   const daysOld = () => {
-    const itemDate = new Date(feedbackItem.itemDate);
     const today = new Date();
-    const differenceInTime = today.getTime() - itemDate.getTime();
+    const differenceInTime = today.getTime() - feedbackItem.itemDate;
     const days = Math.round(differenceInTime / (1000 * 3600 * 24));
     return days;
   };
@@ -30,10 +26,10 @@ export default function FeedbackItem({
         <span>{feedbackItem.upvotes}</span>
       </button>
       <div>
-        <p>{firstChar}</p>
+        <p>{feedbackItem.badgeLetter}</p>
       </div>
       <div>
-        <p>{company}</p>
+        <p>{feedbackItem.companyName}</p>
         <p>{feedbackItem.bodyText}</p>
       </div>
       <p>{daysOld()}d</p>

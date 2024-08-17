@@ -1,9 +1,9 @@
 // import ErrorMessage from "./ErrorMessage";
 // import Spinner from "./Spinner";
-import { useState } from "react";
 
 import FeedbackItem from "./FeedbackItem";
-import { feedbackListStateT } from "./Container";
+import { feedbackListStateT } from "./../App.tsx";
+import { feedbackItemT } from "../App";
 
 export default function FeedbackList({ feedbackList }: feedbackListStateT) {
   return (
@@ -12,8 +12,8 @@ export default function FeedbackList({ feedbackList }: feedbackListStateT) {
         //<Spinner />
         //<ErrorMessage />
       }
-      {feedbackList.map((item) => {
-        return <FeedbackItem feedbackItem={item} />;
+      {feedbackList.map((item: feedbackItemT) => {
+        return <FeedbackItem key={item.itemId} feedbackItem={item} />;
       })}
     </ol>
   );
