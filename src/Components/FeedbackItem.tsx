@@ -1,4 +1,4 @@
-import { feedbackItemT } from "../App";
+import { feedbackItemT } from "../lib/types";
 
 export default function FeedbackItem({
   feedbackItem,

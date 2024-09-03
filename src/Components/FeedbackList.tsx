@@ -1,8 +1,9 @@
 
 
 import FeedbackItem from "./FeedbackItem";
-import { feedbackListStateT } from "./../App.tsx";
-import { feedbackItemT } from "../App";
+
+import { feedbackItemT, feedbackListStateT } from "../lib/types";
+
 import ErrorMessage from "./ErrorMessage.tsx";
 type feedbackListPropTypes= {
   feedbackList:feedbackListStateT;

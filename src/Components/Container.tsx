@@ -1,9 +1,8 @@
 import { useState } from "react";
 import FeedbackList from "./FeedbackList";
 import Header from "./Header";
-import { feedbackItemT } from "../App";
+import { feedbackItemT } from "../lib/types.ts";
 import Spinner from "./Spinner";
-import ErrorMessage from "./ErrorMessage";
 
 type containerProps = {
   feedbackList: feedbackItemT[];

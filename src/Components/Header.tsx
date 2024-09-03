@@ -1,4 +1,5 @@
-import { feedbackListStateT } from "./Container";
+import { feedbackListStateT } from "../lib/types";
+
 import FeedbackForm from "./FeedbackForm";
 import Logo from "./Logo";
 import PageHeading from "./PageHeading";

@@ -1,6 +1,6 @@
 import { MAX_CHARACTER_COUNT } from "../lib/constants";
-import { feedbackItemT, refactorItem } from "../App.tsx";
-
+import {  refactorItem } from "../App.tsx";
+import {feedbackItemT} from "../lib/types.ts"
 type FeedbackFormProps = {
   inputText: string;
   setInputText: React.Dispatch<React.SetStateAction<string>>;
