@@ -29,7 +29,6 @@ export default function App() {
   ) => {
     const currentDate = new Date();
     const company = text.split("#")[1].split(" ")[0].split(",")[0];
-    console.log(company);
     const firstChar = company[0].slice(0, 1);
     const newItem: feedbackItemT = {
       itemId: itemId || currentDate.getTime(),
@@ -39,7 +38,6 @@ export default function App() {
       badgeLetter: firstChar,
       companyName: company,
     };
-    console.log(newItem);
     return newItem;
   };
   useEffect(() => {
