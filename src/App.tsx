@@ -76,5 +76,5 @@ const [errorMessage, setErrorMessage] = useState<string>("")
       /> 
       <HashtagList feedbackList={feedbackList}/>
     </div>
-  );
+  );  
 }

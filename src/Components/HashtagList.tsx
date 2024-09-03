@@ -9,7 +9,7 @@ export default function HashtagList({feedbackList}:{feedbackList:feedbackListSta
       {uniqueNames.map((item:string)=>{
         return <HashtagItem companyName={item}/>
       })}
-      
+       
       
     </ul>
   );

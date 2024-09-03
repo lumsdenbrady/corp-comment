@@ -3,5 +3,5 @@ export default function HashtagItem({companyName}:{companyName:string}) {
     <li>
       <button> #{companyName}</button>
     </li>
-  );
+  ); 
 }
