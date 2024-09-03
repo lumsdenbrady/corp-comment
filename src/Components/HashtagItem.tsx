@@ -1,7 +1,7 @@
-export default function HashtagItem() {
+export default function HashtagItem({companyName}:{companyName:string}) {
   return (
     <li>
-      <button> #{"Brady's Co"}</button>
+      <button> #{companyName}</button>
     </li>
   );
 }

@@ -9,7 +9,9 @@ export default function FeedbackItem({
     const today = new Date();
     const differenceInTime = today.getTime() - feedbackItem.itemDate;
     const days = Math.round(differenceInTime / (1000 * 3600 * 24));
-    return days;
+    if (days === 0){return "new"}
+    else{
+    return `${days}d`;}
   };
   return (
     <li className={`feedback `}>
@@ -32,7 +34,7 @@ export default function FeedbackItem({
         <p>{feedbackItem.companyName}</p>
         <p>{feedbackItem.bodyText}</p>
       </div>
-      <p>{daysOld()}d</p>
+      <p>{daysOld()}</p>
     </li>
   );
 }

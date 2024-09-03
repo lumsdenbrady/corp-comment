@@ -8,7 +8,7 @@ export type feedbackItemT = {
   };
   
   export type feedbackListStateT = {
-    feedbackList: feedbackItemT[];
+    feedbackList?: feedbackItemT[];
     setFeedbackList?: React.Dispatch<React.SetStateAction<feedbackItemT[]>>;
   };
   

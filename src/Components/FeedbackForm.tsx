@@ -14,6 +14,7 @@ export default function FeedbackForm({
 }: FeedbackFormProps) {
   //input text handling
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    
     const { value } = e.target;
     if (value.length <= 150) {
       setInputText(value);
@@ -23,26 +24,30 @@ export default function FeedbackForm({
   };
   //character count derived from input text state
   const charCountRemaining = MAX_CHARACTER_COUNT - inputText.length;
+
   //handling the submit of the form
-  const handleSubmit = (e) => {
+  const handleSubmit = (e?:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit((prev) => {
-      const currentDate = new Date();
+      
      const newItem:feedbackItemT =  refactorItem(inputText);
      
       const newList = [...prev, newItem];
       console.log(newList);
+      setInputText("");
       return newList;
+
     });
   };
   return (
-    <form className={`form form--valid`} onSubmit={handleSubmit}>
+    <form className={`form form--valid`} onSubmit={handleSubmit} >
       <textarea
         placeholder="bla"
         id="itemTextArea"
         spellCheck={false}
         value={inputText}
         onChange={handleChange}
+
       />
       <label htmlFor="itemTextarea">
         Enter your feedback here, remember to #hashtag the company
@@ -50,7 +55,7 @@ export default function FeedbackForm({
 
       <div>
         <p className="u-italic">{charCountRemaining}</p>
-        <button>
+        <button type="submit">
           <span>Submit</span>
         </button>
       </div>

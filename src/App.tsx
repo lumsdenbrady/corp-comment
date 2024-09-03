@@ -3,20 +3,8 @@ import "./App.css";
 import Container from "./Components/Container";
 import Footer from "./Components/Footer";
 import HashtagList from "./Components/HashtagList";
+import { feedbackItemT } from "./lib/types";
 
-export type feedbackItemT = {
-  itemId: number;
-  bodyText: string;
-  itemDate: number;
-  upvotes: number;
-  badgeLetter: string;
-  companyName: string;
-};
-
-export type feedbackListStateT = {
-  feedbackList: feedbackItemT[];
-  setFeedbackList?: React.Dispatch<React.SetStateAction<feedbackItemT[]>>;
-};
 
 export const refactorItem = (
  text: string,
@@ -86,7 +74,7 @@ const [errorMessage, setErrorMessage] = useState<string>("")
         feedbackList={feedbackList}
         setFeedbackList={setFeedbackList}
       /> 
-      <HashtagList />
+      <HashtagList feedbackList={feedbackList}/>
     </div>
   );
 }
