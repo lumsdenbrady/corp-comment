@@ -301,7 +301,7 @@ form button span::selection {
 }
 
 /* FEEDBACKS */
-.feedback-list {
+.feedback-list-container {
   height: 573px;
   overflow-y: scroll;
   overflow-x: hidden;

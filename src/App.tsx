@@ -14,7 +14,7 @@ export type feedbackItemT = {
 };
 
 export type feedbackListStateT = {
-  feedbackList?: feedbackItemT[];
+  feedbackList: feedbackItemT[];
   setFeedbackList?: React.Dispatch<React.SetStateAction<feedbackItemT[]>>;
 };
 
@@ -40,9 +40,11 @@ export const refactorItem = (
 export default function App() {
   const [feedbackList, setFeedbackList] = useState<feedbackItemT[]>([]);
 const [isLoading, setIsLoading] = useState<boolean>(false);
+const [errorMessage, setErrorMessage] = useState<string>("")
   useEffect(() => {
-    setIsLoading(true)
+    setIsLoading(true);
     const fetchInitialItems = async () => {
+      try{
       const res = await fetch(
         "https://bytegrad.com/course-assets/projects/corpcomment/api/feedbacks"
       );
@@ -64,8 +66,12 @@ const [isLoading, setIsLoading] = useState<boolean>(false);
         })
       );
       setIsLoading(false)
-    };
-
+    } catch (error) {
+      console.log(error)
+      setErrorMessage("An error occurred retrieving the data from the server. Please reload the page.")
+      setIsLoading(false)
+    }
+  }
     fetchInitialItems();
    
   }, []);
@@ -73,11 +79,13 @@ const [isLoading, setIsLoading] = useState<boolean>(false);
   return (
     <div className="app">
       <Footer />
+     
       <Container
+      errorMessage={errorMessage}
       isLoading={isLoading}
         feedbackList={feedbackList}
         setFeedbackList={setFeedbackList}
-      />
+      /> 
       <HashtagList />
     </div>
   );

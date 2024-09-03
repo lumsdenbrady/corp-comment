@@ -3,17 +3,20 @@ import FeedbackList from "./FeedbackList";
 import Header from "./Header";
 import { feedbackItemT } from "../App";
 import Spinner from "./Spinner";
+import ErrorMessage from "./ErrorMessage";
 
 type containerProps = {
   feedbackList: feedbackItemT[];
   setFeedbackList: React.Dispatch<React.SetStateAction<feedbackItemT[]>>;
   isLoading:boolean;
+  errorMessage:string;
 };
 
 export default function Container({
   feedbackList,
   setFeedbackList,
   isLoading,
+  errorMessage
 }: containerProps) {
   const [inputText, setInputText] = useState<string>("");
 
@@ -25,7 +28,8 @@ export default function Container({
         setInputText={setInputText}
       />
      { (isLoading) && <Spinner />}
-      <FeedbackList feedbackList={feedbackList} />
+ 
+      <FeedbackList errorMessage={errorMessage} feedbackList={feedbackList} />
     </div>
   );
 }
