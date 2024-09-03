@@ -3,7 +3,7 @@ import "./App.css";
 import Container from "./Components/Container";
 import Footer from "./Components/Footer";
 import HashtagList from "./Components/HashtagList";
-import { initialFeedbackItems } from "../lib/constants";
+
 export type feedbackItemT = {
   itemId: number;
   bodyText: string;
@@ -18,29 +18,30 @@ export type feedbackListStateT = {
   setFeedbackList?: React.Dispatch<React.SetStateAction<feedbackItemT[]>>;
 };
 
+export const refactorItem = (
+ text: string,
+ itemId?: number,
+ itemDate?: number,
+ upvotes?: number
+) => {
+ const currentDate = new Date();
+ const company = text.split("#")[1].split(" ")[0].split(",")[0];
+ const firstChar = company[0].slice(0, 1);
+ const newItem: feedbackItemT = {
+   itemId: itemId || currentDate.getTime(),
+   bodyText: text,
+   itemDate: itemDate || currentDate.getTime(),
+   upvotes: upvotes || 0,
+   badgeLetter: firstChar,
+   companyName: company,
+ };
+ return newItem;
+};
 export default function App() {
   const [feedbackList, setFeedbackList] = useState<feedbackItemT[]>([]);
-
-  const refactorItem = (
-    text: string,
-    itemId?: number,
-    itemDate?: number,
-    upvotes?: number
-  ) => {
-    const currentDate = new Date();
-    const company = text.split("#")[1].split(" ")[0].split(",")[0];
-    const firstChar = company[0].slice(0, 1);
-    const newItem: feedbackItemT = {
-      itemId: itemId || currentDate.getTime(),
-      bodyText: text,
-      itemDate: itemDate || currentDate.getTime(),
-      upvotes: upvotes || 0,
-      badgeLetter: firstChar,
-      companyName: company,
-    };
-    return newItem;
-  };
+const [isLoading, setIsLoading] = useState<boolean>(false);
   useEffect(() => {
+    setIsLoading(true)
     const fetchInitialItems = async () => {
       const res = await fetch(
         "https://bytegrad.com/course-assets/projects/corpcomment/api/feedbacks"
@@ -62,15 +63,18 @@ export default function App() {
           );
         })
       );
+      setIsLoading(false)
     };
 
     fetchInitialItems();
+   
   }, []);
 
   return (
     <div className="app">
       <Footer />
       <Container
+      isLoading={isLoading}
         feedbackList={feedbackList}
         setFeedbackList={setFeedbackList}
       />

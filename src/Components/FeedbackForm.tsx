@@ -1,5 +1,5 @@
 import { MAX_CHARACTER_COUNT } from "../lib/constants";
-import { feedbackItemT } from "./Container";
+import { feedbackItemT, refactorItem } from "../App.tsx";
 
 type FeedbackFormProps = {
   inputText: string;
@@ -28,12 +28,8 @@ export default function FeedbackForm({
     e.preventDefault();
     onSubmit((prev) => {
       const currentDate = new Date();
-      const newItem = {
-        itemId: currentDate.getTime(),
-        bodyText: inputText,
-        itemDate: currentDate.toString(),
-        upvotes: 0,
-      };
+     const newItem:feedbackItemT =  refactorItem(inputText);
+     
       const newList = [...prev, newItem];
       console.log(newList);
       return newList;
