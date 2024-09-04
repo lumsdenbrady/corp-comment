@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { feedbackItemT } from "../lib/types";
 
 export default function FeedbackItem({
@@ -13,8 +14,14 @@ export default function FeedbackItem({
     else{
     return `${days}d`;}
   };
+//handle toggle of item when clicked on
+const [expanded, setExpanded] = useState(false)
+const handleClick = ()=>{
+setExpanded((prev)=>!prev)
+}
+
   return (
-    <li className={`feedback `}>
+    <li className={`feedback ${expanded&& `feedback--expand`}`} onClick={handleClick}>
       <button>
         <svg
           width="15"
