@@ -19,10 +19,17 @@ const [expanded, setExpanded] = useState(false)
 const handleClick = ()=>{
 setExpanded((prev)=>!prev)
 }
+//handle upvote click
+const [upvote, setUpvote] = useState(feedbackItem.upvotes)
+const handleUpvote = (e:React.MouseEvent<HTMLButtonElement, MouseEvent>)=>{
+  e.stopPropagation();
+  e.currentTarget.disabled = true;
+setUpvote((prev)=>prev+1)
+}
 
   return (
     <li className={`feedback ${expanded&& `feedback--expand`}`} onClick={handleClick}>
-      <button>
+      <button onClick={handleUpvote}>
         <svg
           width="15"
           height="15"
@@ -32,7 +39,7 @@ setExpanded((prev)=>!prev)
         >
           <path d="M4 9H11L7.5 4.5L4 9Z" fill="currentColor"></path>
         </svg>
-        <span>{feedbackItem.upvotes}</span>
+        <span>{upvote}</span>
       </button>
       <div>
         <p>{feedbackItem.badgeLetter}</p>
