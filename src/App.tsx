@@ -25,6 +25,36 @@ export const refactorItem = (
  };
  return newItem;
 };
+export const sendNewItem = async (item:feedbackItemT) => {
+  const today = new Date();
+  const differenceInTime = today.getTime() - item.itemDate;
+  const days = Math.round(differenceInTime / (1000 * 3600 * 24));
+  const apiRefactoredItem = {
+    "id":item.itemId,
+    "company":item.companyName,
+    "badgeLetter":item.badgeLetter,
+    "upvoteCount":item.upvotes,
+    "daysAgo":days,
+    "text":item.bodyText,
+  }
+  try{
+  const res = await fetch("https://bytegrad.com/course-assets/projects/corpcomment/api/feedbacks",{
+    method:"POST",
+    headers:{'Content-Type':'application/json'},
+    body: JSON.stringify(apiRefactoredItem)
+  })
+  const data = await res.json();
+  console.log(data);
+  if (!res.ok) {
+    console.log(res);
+    return;
+  }
+  } catch(error:unknown) {
+    console.log(error)
+  }
+
+}
+
 export default function App() {
   const [feedbackList, setFeedbackList] = useState<feedbackItemT[]>([]);
 const [isLoading, setIsLoading] = useState<boolean>(false);

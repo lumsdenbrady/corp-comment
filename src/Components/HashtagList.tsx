@@ -7,7 +7,7 @@ export default function HashtagList({feedbackList}:{feedbackList:feedbackListSta
   return (
     <ul className="hashtags">
       {uniqueNames.map((item:string)=>{
-        return <HashtagItem companyName={item}/>
+        return <HashtagItem key={item} companyName={item}/>
       })}
        
       

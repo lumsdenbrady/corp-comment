@@ -1,5 +1,5 @@
 import { MAX_CHARACTER_COUNT } from "../lib/constants";
-import {  refactorItem } from "../App.tsx";
+import {  refactorItem, sendNewItem } from "../App.tsx";
 import {feedbackItemT} from "../lib/types.ts"
 type FeedbackFormProps = {
   inputText: string;
@@ -26,12 +26,12 @@ export default function FeedbackForm({
   const charCountRemaining = MAX_CHARACTER_COUNT - inputText.length;
 
   //handling the submit of the form
-  const handleSubmit = (e?:React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit((prev) => {
-      
      const newItem:feedbackItemT =  refactorItem(inputText);
-     
+     //send data to server
+     sendNewItem(newItem)
       const newList = [...prev, newItem];
       console.log(newList);
       setInputText("");
