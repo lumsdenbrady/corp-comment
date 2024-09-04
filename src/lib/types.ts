@@ -6,9 +6,10 @@ export type feedbackItemT = {
     badgeLetter: string;
     companyName: string;
   };
+  export type feedbackListT = feedbackItemT[];
   
   export type feedbackListStateT = {
-    feedbackList?: feedbackItemT[];
+    feedbackList?: feedbackListT;
     setFeedbackList?: React.Dispatch<React.SetStateAction<feedbackItemT[]>>;
   };
   

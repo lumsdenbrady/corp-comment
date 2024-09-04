@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import "./App.css";
 import Container from "./Components/Container";
 import Footer from "./Components/Footer";
@@ -59,6 +59,9 @@ export default function App() {
   const [feedbackList, setFeedbackList] = useState<feedbackItemT[]>([]);
 const [isLoading, setIsLoading] = useState<boolean>(false);
 const [errorMessage, setErrorMessage] = useState<string>("")
+const [filterValue, setFilterValue] = useState<string>("")
+
+
   useEffect(() => {
     setIsLoading(true);
     const fetchInitialItems = async () => {
@@ -94,6 +97,13 @@ const [errorMessage, setErrorMessage] = useState<string>("")
    
   }, []);
 
+const filteredFeedbacks = useMemo(()=>{
+  if(filterValue) {return [...feedbackList].filter((item)=>{
+    return item.companyName === filterValue;
+  })}else return feedbackList
+},[filterValue,feedbackList])
+
+
   return (
     <div className="app">
       <Footer />
@@ -101,10 +111,10 @@ const [errorMessage, setErrorMessage] = useState<string>("")
       <Container
       errorMessage={errorMessage}
       isLoading={isLoading}
-        feedbackList={feedbackList}
+        feedbackList={filteredFeedbacks}
         setFeedbackList={setFeedbackList}
       /> 
-      <HashtagList feedbackList={feedbackList}/>
+      <HashtagList filterValue = {filterValue} setFilterValue={setFilterValue}feedbackList={feedbackList}/>
     </div>
   );  
 }
