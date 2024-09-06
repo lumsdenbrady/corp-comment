@@ -2,14 +2,15 @@
 
 import FeedbackItem from "./FeedbackItem";
 
-import { feedbackItemT, feedbackListStateT } from "../lib/types";
+import { feedbackItemT, feedbackListT } from "../lib/types";
 
 import ErrorMessage from "./ErrorMessage.tsx";
+import { useFeedbackItemsContext } from "../lib/hooks.ts";
 type feedbackListPropTypes= {
-  feedbackList:feedbackListStateT;
-  errorMessage:string;
-}
-export default function FeedbackList({ feedbackList, errorMessage }: feedbackListPropTypes) {
+  filteredFeedbackList:feedbackListT;
+  }
+export default function FeedbackList({filteredFeedbackList}:feedbackListPropTypes) {
+  const {errorMessage} = useFeedbackItemsContext()
   return (
     
     (errorMessage) ? 
@@ -17,7 +18,7 @@ export default function FeedbackList({ feedbackList, errorMessage }: feedbackLis
     :(
       <ol className="feedback-list-container">
     
-      {feedbackList.map((item: feedbackItemT) => {
+      {filteredFeedbackList.map((item: feedbackItemT) => {
         return <FeedbackItem key={item.itemId} feedbackItem={item} />;
       })}
     </ol>

@@ -1,8 +1,9 @@
-import { feedbackItemT,  feedbackListT } from "../lib/types";
+import { useFeedbackItemsContext } from "../lib/hooks";
 import HashtagItem from "./HashtagItem";
 
-export default function HashtagList({feedbackList, setFilterValue, filterValue}:{feedbackList:feedbackListT;filterValue:string;setFilterValue:React.Dispatch<React.SetStateAction<string>>}) {
-  const companyNames = feedbackList.map((item:feedbackItemT)=> item.companyName)
+export default function HashtagList({ setFilterValue, filterValue}:{filterValue:string;setFilterValue:React.Dispatch<React.SetStateAction<string>>}) {
+
+const {companyNames} = useFeedbackItemsContext();
   const uniqueNames = [... new Set(companyNames)] as string[];
   return (
     <ul className="hashtags">

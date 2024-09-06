@@ -1,18 +1,12 @@
 import { MAX_CHARACTER_COUNT } from "../lib/constants";
-import {  refactorItem, sendNewItem } from "../App.tsx";
-import {feedbackItemT} from "../lib/types.ts"
+import {  useFeedbackItemsContext } from "../lib/hooks.ts";
 import { useState } from "react";
-type FeedbackFormProps = {
-  inputText: string;
-  setInputText: React.Dispatch<React.SetStateAction<string>>;
-  onSubmit: React.Dispatch<React.SetStateAction<feedbackItemT[]>>;
-};
 
-export default function FeedbackForm({
-  inputText,
-  setInputText,
-  onSubmit,
-}: FeedbackFormProps) {
+
+export default function FeedbackForm() {
+  const [inputText, setInputText] = useState<string>("");
+  const {handleAddToList} = useFeedbackItemsContext();
+
   //input text handling
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     
@@ -31,20 +25,15 @@ export default function FeedbackForm({
     e.preventDefault();
     if (inputText.includes('#')){
       setValid(true)
+      handleAddToList(inputText)
+      setInputText("");
+
       setTimeout(()=>{
         setValid(false)
         setInvalid(false)
       }, 2000)
-    onSubmit((prev) => {
-     const newItem:feedbackItemT =  refactorItem(inputText);
-     //send data to server
-     sendNewItem(newItem)
-      const newList = [...prev, newItem];
-      console.log(newList);
-      setInputText("");
-      return newList;
 
-    });}
+  ;}
     else {
       setInvalid(true)
       setTimeout(()=>{
