@@ -1,9 +1,12 @@
-import { createContext } from "react";
+import { createContext, SetStateAction, useMemo, useState } from "react";
 import { feedbackItemT, feedbackListT } from "../lib/types";
-import { refactorItem, useErrorMessage, useFeedbackList, useFetchFeedbacks, useIsLoading } from "../lib/hooks";
+import { refactorItem, useFetchFeedbacks } from "../lib/hooks";
 
 type TFeedbackItemsContext = {
     feedbackList:feedbackListT;
+    filteredFeedbackList:feedbackListT;
+    setFilterValue:React.Dispatch<SetStateAction<string>>;
+    filterValue:string;
     isLoading: boolean;
     errorMessage:string;
     companyNames: string[];
@@ -17,11 +20,10 @@ type FeedbackItemsContextProviderProps ={
 export const FeedbackItemsContext = createContext<TFeedbackItemsContext | null>(null);
 export default function FeedbackItemsContextProvider({children}: FeedbackItemsContextProviderProps){
 
-const {errorMessage} = useErrorMessage();
-const {feedbackList, setFeedbackList} = useFeedbackList();
-const {isLoading} = useIsLoading();
 
-const handleAddToList = (inputText:string) =>{
+const {feedbackList, setFeedbackList, isLoading, errorMessage} = useFetchFeedbacks();
+
+const handleAddToList =  (inputText:string) =>{
 
      const sendNewItem = async (item:feedbackItemT) => {
         const today = new Date();
@@ -52,26 +54,38 @@ const handleAddToList = (inputText:string) =>{
         }
       
       }
+      const newItem:feedbackItemT =  refactorItem(inputText);
+
       setFeedbackList((prev:feedbackListT) => {
-        const newItem:feedbackItemT =  refactorItem(inputText);
        
-         const newList = [...prev, newItem];
-         console.log(newList);
-          //send data to server
-        sendNewItem(newItem)
-         return newList;
-   
-       }  )
-       console.log(feedbackList)    
+        const newList = [...prev, newItem];
+        console.log(newList);
+        return newList;
+  
+      }  )
+      //send data to server
+      sendNewItem(newItem)
+      
+      
+      
 
 }
+const [filterValue, setFilterValue] = useState<string>("")
 
+const filteredFeedbackList = useMemo(()=>{
+  if(filterValue) {return [...feedbackList].filter((item)=>{
+    return item.companyName === filterValue;
+  })}else return feedbackList
+},[filterValue,feedbackList])
 const companyNames = feedbackList.map((item:feedbackItemT)=> item.companyName)
 
     return (
         <FeedbackItemsContext.Provider
         value={{
             feedbackList,
+            filteredFeedbackList,
+            setFilterValue,
+            filterValue,
             isLoading,
             errorMessage,
             companyNames,

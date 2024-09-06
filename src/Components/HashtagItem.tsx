@@ -1,4 +1,8 @@
-export default function HashtagItem({companyName, setFilterValue, filterValue}:{companyName:string;filterValue:string; setFilterValue:React.Dispatch<React.SetStateAction<string>>}) {
+import { useFeedbackItemsContext } from "../lib/hooks";
+
+export default function HashtagItem({companyName}:{companyName:string;}) {
+  const {filterValue, setFilterValue} = useFeedbackItemsContext()
+  
   const handleClick = ()=>{
     if (filterValue === companyName){
       setFilterValue("")

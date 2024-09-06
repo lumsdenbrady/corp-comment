@@ -23,39 +23,15 @@ export const refactorItem = (
     return newItem;
    };
 
-
-
-
-export const useIsLoading = () => {
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-return {
-    isLoading:isLoading,
-    setIsLoading:setIsLoading,
-}
-}
-
-export const useErrorMessage = () => {
-    const [errorMessage, setErrorMessage] = useState<string>("")
-return {
-    errorMessage:errorMessage,
-    setErrorMessage:setErrorMessage
-    
-}
-}
-export const useFeedbackList = () => {
-  const [feedbackList, setFeedbackList] = useState<feedbackItemT[]>([]);
- const {initialList} = useFetchFeedbacks();
- setFeedbackList(initialList)
-  return {
-  feedbackList:feedbackList,
-  setFeedbackList:setFeedbackList
-}
-}
 export const useFetchFeedbacks = () =>{
-   const { setIsLoading} = useIsLoading();
-   const { setErrorMessage} = useErrorMessage();
-   const [initialList, setInitialList] = useState<feedbackListT>([]);
-useEffect(() => {
+   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+   const [errorMessage, setErrorMessage] = useState<string>("")
+
+  const [feedbackList, setFeedbackList] = useState<feedbackItemT[]>([]);
+
+   useEffect(() => {
+    console.log("running useeffect")
     setIsLoading(true);
     const fetchInitialItems = async () => {
       try{
@@ -65,9 +41,10 @@ useEffect(() => {
       const data = await res.json();
       if (!res.ok) {
         return;
-      }
-
-        setInitialList(()=>{data.feedbacks.map((item) => {
+      };
+      setFeedbackList(()=>{
+          console.log(data)
+         const newList =  data.feedbacks.map((item) => {
           const d = new Date();
           const itemDateFull = d.getTime() - item.daysAgo * 86400000;
           return refactorItem(
@@ -76,8 +53,10 @@ useEffect(() => {
             itemDateFull,
             item.upvoteCount
           );
-        })})
-      ;
+        })
+         return newList
+        })
+      
       setIsLoading(false)
     } catch (error) {
       console.log(error)
@@ -88,8 +67,13 @@ useEffect(() => {
     fetchInitialItems();
    
   }, []);
+console.log(feedbackList)
   return {
-    initialList:initialList
+    feedbackList:feedbackList,
+    setFeedbackList:setFeedbackList,
+    isLoading:isLoading,
+    errorMessage,
+    setErrorMessage
   }
 }
 
